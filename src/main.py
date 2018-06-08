@@ -32,3 +32,5 @@ if __name__ == '__main__':
                     input_endd,)
     print('The task called "{}" takes {} days'.format(my_task.task_name, my_task.get_duration()))
     print('You need to complete {} {} per day'.format(my_task.get_required_rate(), my_task.units_name))
+
+    my_task.save_to_file()
