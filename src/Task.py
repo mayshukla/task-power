@@ -9,12 +9,12 @@ class Task:
         self.task_name = task_name
         self.units_name = units_name
         self.units_count = units_count
-        self.startdate = date(starty, startm, startd) # convert to a datetime.date object
-        self.enddate = date(endy, endm, endd)
+        self.start_date = date(starty, startm, startd) # convert to a datetime.date object
+        self.end_date = date(endy, endm, endd)
 
     def get_duration(self):
         # returns duration in days
-        duration_delta = self.enddate - self.startdate # datetime.delta object
+        duration_delta = self.end_date - self.start_date # datetime.delta object
         return duration_delta.days
 
     def get_required_rate(self):
@@ -26,11 +26,11 @@ class Task:
         # in a human-readable format.
         # This string can be used to save to a file
 
-        string_out = 'Task name:  {}\n'.format(self.task_name) \
+        string_out = 'Task name: {}\n'.format(self.task_name) \
                    + 'Units name: {}\n'.format(self.units_name) \
                    + 'Number of units: {}\n'.format(self.units_count) \
-                   + 'Start date: {}.{}.{}\n'.format(self.startdate.year, self.startdate.month, self.startdate.day) \
-                   + 'End date: {}.{}.{}\n'.format(self.enddate.year, self.enddate.month, self.enddate.day)
+                   + 'Start date: {}.{}.{}\n'.format(self.start_date.year, self.start_date.month, self.start_date.day) \
+                   + 'End date: {}.{}.{}\n'.format(self.end_date.year, self.end_date.month, self.end_date.day)
 
         return string_out
 
