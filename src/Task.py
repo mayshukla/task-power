@@ -4,18 +4,15 @@ from datetime import date, timedelta
 
 class Task:
 
-    def __init__(self, task_name, units_name, units_count, starty, startm, startd, endy, endm, endd):
+    def __init__(self, task_name, units_name, units_count, work_periods):
+        # task_name and units_name are strings
+        # units_count is an integer
+        # work_periods is a nested list of date objects [[start1, end1], [start2, end2], ... ]
 
         self.task_name = task_name
         self.units_name = units_name
         self.units_count = units_count
-        self.start_date = date(starty, startm, startd) # convert to a datetime.date object
-        self.end_date = date(endy, endm, endd)
-
-    def get_duration(self):
-        # returns duration in days
-        duration_delta = self.end_date - self.start_date # datetime.delta object
-        return duration_delta.days
+        self.work_periods = work_periods
 
     def get_required_rate(self):
         # returns a number respresenting units per day

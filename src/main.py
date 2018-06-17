@@ -1,37 +1,38 @@
+# standard python modules
+from datetime import date, timedelta
+
+# my modules
 from datetools import convert_weekday_to_string
 from Task import Task
 
 if __name__ == '__main__':
 
-    # Testing Task class
-    #my_task = Task('math worksheet', 'questions', 60, 2018, 6, 6, 2018, 6, 12)
-    #print('The task called "{}" takes {} days'.format(my_task.task_name, my_task.get_duration()))
-    #print('You need to complete {} {} per day'.format(my_task.get_required_rate(), my_task.units_name))
-
     # Testing Task class with user input
-    input_task_name = input('Enter task name: ')
-    input_units_name = input('Enter name of units (plural): ')
-    input_units_count = int(input('Enter number of units: '))
+    task_name = input('Enter task name: ')
+    units_name = input('Enter name of units (plural): ')
+    units_count = input('Enter total number of units to complete: ')
 
-    input_starty = int(input('Enter start year: '))
-    input_startm = int(input('Enter start month: '))
-    input_startd = int(input('Enter start day: '))
+    work_periods_count = int(input('Enter number of work periods: '))
 
-    input_endy = int(input('Enter end year: '))
-    input_endm = int(input('Enter end month: '))
-    input_endd = int(input('Enter end day: '))
+    # create nested list of date objects
+    # see Task class
+    work_periods = []
+    for i in range(0, work_periods_count):
+        print('---New work period---')
 
-    my_task = Task( input_task_name,
-                    input_units_name,
-                    input_units_count,
-                    input_starty,
-                    input_startm,
-                    input_startd,
-                    input_endy,
-                    input_endm,
-                    input_endd,)
-    print('The task called "{}" takes {} days'.format(my_task.task_name, my_task.get_duration()))
-    print('You need to complete {} {} per day'.format(my_task.get_required_rate(), my_task.units_name))
+        starty = int(input('Enter start year: '))
+        startm = int(input('Enter start month: '))
+        startd = int(input('Enter start day: '))
 
-    # Testing save_to_file method
-    my_task.save_to_file()
+        endy = int(input('Enter end year: '))
+        endm = int(input('Enter end month: '))
+        endd = int(input('Enter end day: '))
+
+        work_periods.append([date(starty, startm, startd), date(endy, endm, endd)])
+    
+    my_task = Task( task_name,
+                    units_name,
+                    units_count,
+                    work_periods)
+
+    print(my_task)     
