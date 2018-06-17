@@ -1,37 +1,54 @@
+# standard python modules
+import curses
+from curses.textpad import Textbox, rectangle
+
+# my modules
 from datetools import convert_weekday_to_string
 from Task import Task
 
-if __name__ == '__main__':
+def main(stdscr):
+    #stdscr.clear()
+    #curses.curs_set(False) #turn off visible cursor
 
-    # Testing Task class
-    #my_task = Task('math worksheet', 'questions', 60, 2018, 6, 6, 2018, 6, 12)
-    #print('The task called "{}" takes {} days'.format(my_task.task_name, my_task.get_duration()))
-    #print('You need to complete {} {} per day'.format(my_task.get_required_rate(), my_task.units_name))
+    stdscr.addstr('Welcome to Task Power!')
 
-    # Testing Task class with user input
-    input_task_name = input('Enter task name: ')
-    input_units_name = input('Enter name of units (plural): ')
-    input_units_count = int(input('Enter number of units: '))
+    #create a new window and a text input box inside it
+    editwin = curses.newwin(1,20, 3,1)
+    rectangle(stdscr, 2,0, 1+2+1,1+20+1)
+    stdscr.refresh()
 
-    input_starty = int(input('Enter start year: '))
-    input_startm = int(input('Enter start month: '))
-    input_startd = int(input('Enter start day: '))
+    box = Textbox(editwin)
+    
+    #let the user edit unit Ctrl-G struck
+    box.edit()
 
-    input_endy = int(input('Enter end year: '))
-    input_endm = int(input('Enter end month: '))
-    input_endd = int(input('Enter end day: '))
+    #get the input
+    input_text = box.gather()
 
-    my_task = Task( input_task_name,
-                    input_units_name,
-                    input_units_count,
-                    input_starty,
-                    input_startm,
-                    input_startd,
-                    input_endy,
-                    input_endm,
-                    input_endd,)
-    print('The task called "{}" takes {} days'.format(my_task.task_name, my_task.get_duration()))
-    print('You need to complete {} {} per day'.format(my_task.get_required_rate(), my_task.units_name))
+    #spit back the input to the second line of stdscr
+    stdscr.addstr(1, 0, input_text)
+    stdscr.refresh()
 
-    # Testing save_to_file method
-    my_task.save_to_file()
+    #create a new window and a text input box inside it
+    editwin2 = curses.newwin(1,20, 6,1)
+    
+    #border() doesn't see to work
+    #editwin2.border([0[, 0[, 0[, 0[, 0[, 0[, 0[, 0]]]]]]]])
+    rectangle(stdscr, 5,0, 1+5+1,1+20+1)
+    stdscr.refresh()
+
+    box2 = Textbox(editwin2)
+    box2.edit()
+    input_text2 = box2.gather()
+
+    stdscr.addstr(1, 23, input_text2)
+    stdscr.refresh()
+
+    #try going back and editing first window
+    box.edit()
+
+    stdscr.getkey() #wait for any keypress
+
+# initialize curses stdscr object and call main function
+curses.wrapper(main)
+print('curses closed')
