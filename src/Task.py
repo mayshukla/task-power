@@ -14,6 +14,17 @@ class Task:
         self.units_count = units_count
         self.work_periods = work_periods
 
+    def get_duration(self):
+        # returns total number of work days including end days
+        # accounts for non-continuous work periods
+        total_workdays = 0;
+        for period in self.work_periods:
+            # IMPORTANT: add one to include end days
+            workdays_in_period = (period[1] - period[0]).days + 1
+            total_workdays = total_workdays + workdays_in_period
+
+        return total_workdays
+
     def get_required_rate(self):
         # returns a number respresenting units per day
         return self.units_count / self.get_duration()
