@@ -10,3 +10,5 @@ def init_taskfiles_directory():
     else:
         print('No taskfiles directory found. Creating new one.')
         taskfiles_path.mkdir()
+
+    return taskfiles_path
