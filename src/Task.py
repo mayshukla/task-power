@@ -2,6 +2,8 @@
 from datetime import date, timedelta
 from pathlib import Path
 
+from datetools import is_in_range
+
 class Task:
 
     def __init__(self, task_name, units_name, units_count, work_periods):
@@ -28,6 +30,18 @@ class Task:
     def get_required_rate(self):
         # returns a number respresenting units per day
         return self.units_count / self.get_duration()
+
+    def is_active(self, date_to_check):
+        # returns true if date_to_check is in any of the work periods for the given task
+        # date_to_check should be date object
+
+        output = False
+
+        for work_period in self.work_periods:
+            if is_in_range(date_to_check, work_period[0], work_period[1]):
+                output = True
+
+        return output
 
     def generate_text(self):
         # Returns a string containing all attributes of an instance
