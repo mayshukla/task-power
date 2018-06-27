@@ -5,11 +5,16 @@ from datetime import date, timedelta
 from init_taskfiles_directory import init_taskfiles_directory
 from datetools import convert_weekday_to_string
 from Task import Task
+from read_taskfiles import read_taskfiles
 
 if __name__ == '__main__':
 
     # Initialize taskfiles directory and store in variable to pass when saving stuff to .task files
     taskfiles_path = init_taskfiles_directory()
+
+    Task_list = read_taskfiles(taskfiles_path)
+    for task in Task_list:
+        print(task.task_name)
 
     # Testing Task class with user input
     task_name = input('Enter task name: ')

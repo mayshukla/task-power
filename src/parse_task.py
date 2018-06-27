@@ -1,3 +1,5 @@
+from datetime import date
+
 from Task import Task
 
 # TODO: error checking (missing parameters)
@@ -9,13 +11,8 @@ def parse_task(buf):
     task_name = ''
     units_name = ''
     units_count = 0
-    starty = 0
-    startm = 0
-    startd = 0
-    endy = 0
-    endm = 0
-    endd = 0
-
+    work_periods = []       
+ 
     # split newlines
     buf = buf.splitlines()
 
@@ -32,21 +29,40 @@ def parse_task(buf):
     for i in range(0, len(buf)):
         if buf[i][0].lower() == 'task name':
             task_name = buf[i][1]
+
         elif buf[i][0].lower() == 'units name':
             units_name = buf[i][1]
+
         elif buf[i][0].lower() == 'number of units':
             units_count = int(buf[i][1])
-        elif buf[i][0].lower() == 'start date':
-            # split date at periods
-            start_date = buf[i][1].split('.')
-            starty = int(start_date[0])
-            startm = int(start_date[1])
-            startd = int(start_date[2])
-        elif buf[i][0].lower() == 'end date':
-            # split date at periods
-            end_date = buf[i][1].split('.')
-            endy = int(end_date[0])
-            endm = int(end_date[1])
-            endd = int(end_date[2])
 
-    return Task(task_name, units_name, units_count, starty, startm, startd, endy, endm, endd)
+        elif buf[i][0].lower() == 'work periods':
+            # split at commas
+            buf[i][1] = buf[i][1].split(',')
+            
+            for j in range(0, len(buf[i][1])):
+                # remove leading and trailing whitespace
+                buf[i][1][j] = buf[i][1][j].strip()
+
+                # split start dates and end dates at dashes
+                buf[i][1][j] = buf[i][1][j].split('-')
+                
+                for k in range(0, len(buf[i][1][j])):
+                    buf[i][1][j][k] = buf[i][1][j][k].strip()
+                    # split year/month/day at slash
+                    buf[i][1][j][k] = buf[i][1][j][k].split('/')
+
+                    for l in range(0, len(buf[i][1][j][k])):
+                        buf[i][1][j][k][l] = buf[i][1][j][k][l].strip(
+)
+                starty = int(buf[i][1][j][0][0])
+                startm = int(buf[i][1][j][0][1])
+                startd = int(buf[i][1][j][0][2])
+
+                endy   = int(buf[i][1][j][1][0])
+                endm   = int(buf[i][1][j][1][1])
+                endd   = int(buf[i][1][j][1][2])
+
+                work_periods.append([date(starty, startm, startd), date(endy, endm, endd)]) 
+
+    return Task(task_name, units_name, units_count, work_periods)

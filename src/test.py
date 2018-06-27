@@ -6,7 +6,7 @@ from Task import Task
 taskfiles_path = init_taskfiles_directory() 
 
 task_name = 'sweep'
-units_name = 'boards'
+units_name = 'tiles'
 units_count = 21
 work_periods = [ [date(2018, 1, 1), date(2018, 1, 4)], \
                  [date(2018, 2, 1), date(2018, 2, 3)]]
