@@ -18,5 +18,7 @@ if __name__ == '__main__':
     hud_text = hud(taskfiles_path, date.today())
     print(hud_text)
     
-    # Prompt user for input and create .task file in taskfiles directory
-    task_creation_wizard(taskfiles_path)
+    user_selection = input('Would you like to create a new task? (y/n) ')
+    if user_selection.lower() == 'y':
+        # Prompt user for input and create .task file in taskfiles directory
+        task_creation_wizard(taskfiles_path)
