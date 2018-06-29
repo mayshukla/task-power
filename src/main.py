@@ -7,6 +7,7 @@ from datetools import convert_weekday_to_string
 from Task import Task
 from read_taskfiles import read_taskfiles
 from hud import hud
+from task_creation_wizard import task_creation_wizard
 
 if __name__ == '__main__':
 
@@ -16,33 +17,6 @@ if __name__ == '__main__':
     # Generate text for heads up display
     hud_text = hud(taskfiles_path, date.today())
     print(hud_text)
-
-    # Testing Task class with user input
-    task_name = input('Enter task name: ')
-    units_name = input('Enter name of units (plural): ')
-    units_count = input('Enter total number of units to complete: ')
-
-    work_periods_count = int(input('Enter number of work periods: '))
-
-    # create nested list of date objects
-    # see Task class
-    work_periods = []
-    for i in range(0, work_periods_count):
-        print('---New work period---')
-
-        starty = int(input('Enter start year: '))
-        startm = int(input('Enter start month: '))
-        startd = int(input('Enter start day: '))
-
-        endy = int(input('Enter end year: '))
-        endm = int(input('Enter end month: '))
-        endd = int(input('Enter end day: '))
-
-        work_periods.append([date(starty, startm, startd), date(endy, endm, endd)])
     
-    my_task = Task( task_name,
-                    units_name,
-                    units_count,
-                    work_periods)
-
-    my_task.save_to_file(taskfiles_path)
+    # Prompt user for input and create .task file in taskfiles directory
+    task_creation_wizard(taskfiles_path)
